@@ -1,0 +1,12 @@
+1. Download the java calculus library(open-source) from https://code.google.com/p/javacalculus/
+If using a JAR, add in the classpath else, keep the source folder in the same location as the .java files.
+2. Download and unzip code from https://github.com/prachibhansali/FloatingPointArithmetic
+3. Instructions to run the file is as follows:
+	- Organize Inputs:
+		formula: formula in PREFIX format
+		initializers: One variable-value pair per line, for example,
+			x 20
+			y 30
+	- Run FPAEvaluate.java with either of the ways:
+		1. java FPAEvaluate variableToChange
+		2. java FPAEvaluate variableToChange initDelta (default delta is Double.MIN_VALUE)
