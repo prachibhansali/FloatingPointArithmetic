@@ -32,7 +32,8 @@ public class FPAEvaluate {
 
 	FPAEvaluate(String v) throws Exception
 	{
-		formula=new BufferedReader(new FileReader("formula.txt")).readLine();
+		try{
+			formula=new BufferedReader(new FileReader("formula.txt")).readLine();
 		PrefixToInfix p=new PrefixToInfix(formula);
 		formula=p.getFormula();
 		engine = (new ScriptEngineManager()).getEngineByName("js"); 
@@ -41,8 +42,13 @@ public class FPAEvaluate {
 		delta=Double.MIN_VALUE;
 		//power=0;
 		exp=delta;
-		variableToChange=selectSuitableVariable();
+		variableToChange=v;//selectSuitableVariable();
 		initialValue=(Double) engine.get(variableToChange);
+		}
+		catch(Exception e)
+		{
+			System.out.println();
+		}
 	}
 	
 	FPAEvaluate(String v,double delta) throws Exception
@@ -56,10 +62,25 @@ public class FPAEvaluate {
 		this.delta=delta;
 		//power=0;
 		exp=delta;
-		variableToChange=selectSuitableVariable();
+		variableToChange=v;//selectSuitableVariable();
 		initialValue=(Double) engine.get(variableToChange);
 	}
 
+	FPAEvaluate() throws Exception
+	{
+		formula=new BufferedReader(new FileReader("formula.txt")).readLine();
+		PrefixToInfix p=new PrefixToInfix(formula);
+		formula=p.getFormula();
+		engine = (new ScriptEngineManager()).getEngineByName("js"); 
+		keys = new HashSet<String>();
+		getKeyValues("initializers");
+		this.delta=Double.MIN_VALUE;
+		//power=0;
+		exp=delta;
+		variableToChange=selectSuitableVariable();
+		initialValue=(Double) engine.get(variableToChange);
+	}
+	
 	private String selectSuitableVariable() throws Exception 
 	{
 		Iterator<String> keysitr= keys.iterator();
@@ -93,7 +114,10 @@ public class FPAEvaluate {
 		//System.out.println("Enter variable to change : ");
 		FPAEvaluate fpa=null;
 		try {
-			fpa = new FPAEvaluate("");
+			if(args.length==1) fpa = new FPAEvaluate(args[0]);
+			else if(args.length==2) fpa = new FPAEvaluate(args[0],Double.parseDouble(args[1]));
+			else if(args.length==0) fpa = new FPAEvaluate();
+			else throw new IOException();
 		} catch (Exception e1) {
 			System.out.println("Could not initialize FPA object.. Exiting..");
 			return;
