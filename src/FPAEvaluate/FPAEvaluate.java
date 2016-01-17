@@ -119,7 +119,7 @@ public class FPAEvaluate {
 			else if(args.length==1) fpa = new FPAEvaluate(args[0]);
 			else throw new IOException();
 		} catch (Exception e1) {
-			System.out.println("Could not initialize FPA object.. Exiting..");
+			System.out.println("Could not initialize FPA object.. Exiting.."+e1.toString());
 			return;
 		}
 		if(fpa.evaluateFunction()>0) 
