@@ -30,35 +30,35 @@ public class FPAEvaluate {
 	Set<String> keys = null;
 	double exp;
 
-	FPAEvaluate(String v) throws Exception
+	FPAEvaluate(String loc,String v) throws Exception
 	{
 		try{
-			formula=new BufferedReader(new FileReader("formula.txt")).readLine();
-		PrefixToInfix p=new PrefixToInfix(formula);
-		formula=p.getFormula();
-		engine = (new ScriptEngineManager()).getEngineByName("js"); 
-		keys = new HashSet<String>();
-		getKeyValues("initializers");
-		delta=Double.MIN_VALUE;
-		//power=0;
-		exp=delta;
-		variableToChange=v;//selectSuitableVariable();
-		initialValue=(Double) engine.get(variableToChange);
+			formula=new BufferedReader(new FileReader(loc+"formula.txt")).readLine();
+			PrefixToInfix p=new PrefixToInfix(formula);
+			formula=p.getFormula();
+			engine = (new ScriptEngineManager()).getEngineByName("js"); 
+			keys = new HashSet<String>();
+			getKeyValues(loc+"initializers");
+			delta=Double.MIN_VALUE;
+			//power=0;
+			exp=delta;
+			variableToChange=v;//selectSuitableVariable();
+			initialValue=(Double) engine.get(variableToChange);
 		}
 		catch(Exception e)
 		{
 			System.out.println();
 		}
 	}
-	
-	FPAEvaluate(String v,double delta) throws Exception
+
+	FPAEvaluate(String loc,String v,double delta) throws Exception
 	{
-		formula=new BufferedReader(new FileReader("formula.txt")).readLine();
+		formula=new BufferedReader(new FileReader(loc+"formula.txt")).readLine();
 		PrefixToInfix p=new PrefixToInfix(formula);
 		formula=p.getFormula();
 		engine = (new ScriptEngineManager()).getEngineByName("js"); 
 		keys = new HashSet<String>();
-		getKeyValues("initializers");
+		getKeyValues(loc+"initializers");
 		this.delta=delta;
 		//power=0;
 		exp=delta;
@@ -66,21 +66,21 @@ public class FPAEvaluate {
 		initialValue=(Double) engine.get(variableToChange);
 	}
 
-	FPAEvaluate() throws Exception
+	FPAEvaluate(String loc) throws Exception
 	{
-		formula=new BufferedReader(new FileReader("formula.txt")).readLine();
+		formula=new BufferedReader(new FileReader(loc+"formula.txt")).readLine();
 		PrefixToInfix p=new PrefixToInfix(formula);
 		formula=p.getFormula();
 		engine = (new ScriptEngineManager()).getEngineByName("js"); 
 		keys = new HashSet<String>();
-		getKeyValues("initializers");
+		getKeyValues(loc+"initializers");
 		this.delta=Double.MIN_VALUE;
 		//power=0;
 		exp=delta;
 		variableToChange=selectSuitableVariable();
 		initialValue=(Double) engine.get(variableToChange);
 	}
-	
+
 	private String selectSuitableVariable() throws Exception 
 	{
 		Iterator<String> keysitr= keys.iterator();
@@ -114,9 +114,9 @@ public class FPAEvaluate {
 		//System.out.println("Enter variable to change : ");
 		FPAEvaluate fpa=null;
 		try {
-			if(args.length==1) fpa = new FPAEvaluate(args[0]);
-			else if(args.length==2) fpa = new FPAEvaluate(args[0],Double.parseDouble(args[1]));
-			else if(args.length==0) fpa = new FPAEvaluate();
+			if(args.length==2) fpa = new FPAEvaluate(args[0],args[1]);
+			else if(args.length==3) fpa = new FPAEvaluate(args[0],args[1],Double.parseDouble(args[2]));
+			else if(args.length==1) fpa = new FPAEvaluate(args[0]);
 			else throw new IOException();
 		} catch (Exception e1) {
 			System.out.println("Could not initialize FPA object.. Exiting..");

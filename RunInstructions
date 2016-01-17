@@ -7,6 +7,7 @@ If using a JAR, add in the classpath else, keep the source folder in the same lo
 		initializers: One variable-value pair per line, for example,
 			x 20
 			y 30
-	- Run FPAEvaluate.java with either of the ways:
-		1. java FPAEvaluate variableToChange
-		2. java FPAEvaluate variableToChange initDelta (default delta is Double.MIN_VALUE)
+	- Run FPAEvaluate.java with one of the following ways, where loc is the directory location of where the initalizers and formula files are located:
+		1. java FPAEvaluate loc
+		1. java FPAEvaluate loc variableToChange
+		2. java FPAEvaluate loc variableToChange initDelta (default delta is Double.MIN_VALUE)
